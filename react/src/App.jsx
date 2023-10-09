@@ -1,15 +1,28 @@
-import { useState } from 'react'
-import './App.css'
+import "./App.css";
+import GuestForm from "./GuestForm";
+import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
 
 function App() {
-
   return (
     <>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Navbar className="bg-body-tertiary">
+        <Container>
+          <Navbar.Brand href="#home">Form App</Navbar.Brand>
+          <Navbar.Toggle />
+          <Navbar.Collapse className="justify-content-end">
+            <Navbar.Text>
+              Signed in as: <a href="#login">Mark Otto</a>
+            </Navbar.Text>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <div id="container-parent">
+        <h1>Customer Form</h1>
+        <GuestForm />
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
