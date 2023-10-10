@@ -4,15 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import axios from "axios";
 
-const Admin = () => {
+const Admin = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API_URL}/feebackList`).then((res) => {
-      console.log(res);
-      setList(res.data.list);
-    });
+    if (isLoggedIn) {
+      axios.get(`${API_URL}/feebackList`).then((res) => {
+        console.log(res);
+        setList(res.data.list);
+      });
+    } else {
+      navigate("/login");
+    }
   }, []);
 
   return (

@@ -17,15 +17,19 @@ const GuestForm = () => {
 
   const saveFeedback = () => {
     setApiErr(null);
-    axios.post(`${API_URL}/feedbackSave`, formData).then((res) => {
-      if (res.data.success) {
-        setFormData(defaultState);
-        setApiSucc("Saved Successfully");
-      } else {
-        console.log(res);
-        setApiErr("Issues while saving");
-      }
-    });
+    try {
+      axios.post(`${API_URL}/feedbackSave`, formData).then((res) => {
+        if (res.data.success) {
+          setFormData(defaultState);
+          setApiSucc(res.data.message);
+        } else {
+          console.log(res);
+          setApiErr(res.data.message);
+        }
+      });
+    } catch (e) {
+      console.log("Catch block", e);
+    }
   };
 
   return (

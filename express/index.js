@@ -17,18 +17,23 @@ app.post("/adminLogin", (req, res) => {
   const { email, pass } = req.body;
 
   if (process.env.EMAIL === email && process.env.PASS === pass) {
-    res.status(200).send({ success: true });
+    res.send({ success: true });
   } else {
-    res.status(200).send({ success: false });
+    res.send({ success: false });
   }
 });
 
 app.post("/feedbackSave", async (req, res) => {
   try {
-    let dbRes = await prisma.feedback.create({ data: req.body });
-    res.status(200).send({ success: true });
+    await prisma.feedback.create({ data: req.body });
+    res.send({ success: true, message: "Feedback submitted successfully" });
   } catch (e) {
-    res.status(200).send({ success: false });
+    let message = "Failed to save";
+    if (e.code === "P2002" && e.meta?.target.includes("email")) {
+      message = "You have already submitted feedback";
+    }
+    console.log(e);
+    res.send({ success: false, message });
   }
 });
 
